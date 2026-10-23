@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Graphisme et montage vidéo</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f8ff;--ink:#0b1b33;--mute:#5b6b85;--ln:#d6e2f5;--acc:#ff7a1a;--card:#e6f0ff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#f3f8ff;--ink:#0b1b33;--mute:#5b6b85;--ln:#d6e2f5;--card:#e6f0ff}}
+:root[data-theme="dark"]{--bg:#f3f8ff;--ink:#0b1b33;--mute:#5b6b85;--ln:#d6e2f5;--card:#e6f0ff}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:'Manrope',system-ui,sans-serif;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--acc);color:#0a1020}
+#bar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--acc);z-index:200}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:100;display:flex;justify-content:space-between;align-items:center;padding:18px 6vw;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--ln)}
+.logo{font-weight:800;letter-spacing:-.02em;font-size:clamp(14px,3.6vw,20px)}.logo i{color:var(--acc);font-style:normal}
+nav{display:flex;gap:26px;font-size:14px;font-weight:500}
+nav a{position:relative}nav a::after{content:"";position:absolute;left:0;bottom:-4px;height:2px;width:0;background:var(--acc);transition:width .3s}nav a:hover::after{width:100%}
+section{padding:90px 6vw}
+h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif;letter-spacing:-.03em;line-height:1.02}
+h2{font-size:clamp(30px,5vw,56px);margin-bottom:12px}
+.sub{color:var(--mute);margin-bottom:30px;max-width:520px;line-height:1.6}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.3fr .7fr;gap:50px;align-items:center;min-height:86svh}
+.hero h1{font-size:clamp(40px,7.4vw,108px);font-weight:800}
+.hero h1 .w{display:inline-block;opacity:0;transform:translateY(40px);filter:blur(8px);animation:wIn .8s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 .a{color:var(--acc)}
+@keyframes wIn{to{opacity:1;transform:none;filter:none}}
+.hero p{margin-top:24px;color:var(--mute);max-width:460px;line-height:1.7;opacity:0;animation:wIn .8s ease .8s forwards}
+.cta{display:inline-block;margin-top:28px;background:var(--ink);color:var(--bg);padding:14px 26px;border-radius:99px;font-weight:700;font-size:14px;transition:transform .25s,background .25s;opacity:0;animation:wIn .8s ease 1s forwards}
+.cta:hover{background:var(--acc);transform:translateY(-3px)}
+.photo{aspect-ratio:3/4;border-radius:32px 120px 32px 120px;background:linear-gradient(160deg,var(--acc),#ffd0a8);display:grid;place-items:center;color:#fff;font-weight:700;text-align:center;animation:float 5s ease-in-out infinite;position:relative;overflow:hidden}
+@keyframes float{50%{transform:translateY(-14px)}}
+.stats{display:flex;gap:40px;margin-top:40px;opacity:0;animation:wIn .8s ease 1.2s forwards}
+.stats b{display:block;font-size:34px;font-weight:800}.stats span{font-size:13px;color:var(--mute)}
+
+.mq{border-block:1px solid var(--ln);overflow:hidden;white-space:nowrap;padding:16px 0}
+.mq div{display:inline-block;animation:mq 24s linear infinite;font-size:20px;font-weight:800}
+.mq span{margin:0 26px;color:var(--mute)}.mq span:nth-child(even){color:var(--acc)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s,transform .8s}.rv.in{opacity:1;transform:none}
+
+/* filtres */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.chip{border:1px solid var(--ln);background:transparent;color:var(--ink);padding:9px 16px;border-radius:99px;font:600 13px 'Manrope';cursor:pointer;transition:.2s}
+.chip:hover{border-color:var(--ink)}.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hide{display:none!important}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.card{aspect-ratio:4/5;border-radius:20px;background:var(--g);position:relative;overflow:hidden;cursor:pointer;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.card:hover{transform:translateY(-8px) scale(1.015)}
+.card::before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,#000a);}
+.card em{position:absolute;top:14px;left:14px;font-style:normal;font-size:12px;font-weight:700;background:#fff;color:#111;padding:5px 12px;border-radius:99px}
+.card h3{position:absolute;left:18px;right:18px;bottom:16px;color:#fff;font-size:20px;transition:transform .3s}
+.card:hover h3{transform:translateY(-6px)}
+.card small{position:absolute;inset:0;display:grid;place-items:center;color:#fff9;font-size:12px}
+
+/* vidéo */
+.vid{position:relative;border-radius:24px;overflow:hidden;background:#000;aspect-ratio:16/9;box-shadow:0 30px 60px -30px #0008}
+.vid video,.vid canvas{width:100%;height:100%;display:block;object-fit:cover}
+.vid .ctl{position:absolute;left:16px;bottom:16px;display:flex;gap:10px;align-items:center;color:#fff;font-size:13px;font-weight:700}
+.pbtn{width:46px;height:46px;border-radius:50%;border:0;background:var(--acc);color:#fff;font-size:16px;cursor:pointer;transition:transform .2s}.pbtn:hover{transform:scale(1.12)}
+.up{margin-top:14px;font-size:13px}
+.up label{display:inline-block;border:1px dashed var(--acc);color:var(--acc);padding:10px 16px;border-radius:99px;cursor:pointer;font-weight:700}
+.up input{display:none}
+
+.row{display:grid;grid-template-columns:180px 1fr auto;gap:26px;align-items:center;padding:18px 0;border-bottom:1px solid var(--ln);cursor:pointer;transition:padding .3s}
+.row:hover{padding-left:12px}
+.th{aspect-ratio:16/9;border-radius:12px;background:var(--g);display:grid;place-items:center;color:#fff}
+.row h3{font-size:clamp(18px,2.6vw,28px);letter-spacing:-.02em}.row p,.row .t{color:var(--mute);font-size:13px;margin-top:4px}
+
+/* avis */
+.avis{display:grid;grid-template-columns:1.1fr .9fr;gap:40px}
+.lst{display:flex;flex-direction:column;gap:14px}
+.rc{background:var(--card);border-radius:18px;padding:20px;animation:wIn .5s ease both}
+.rc .s{color:var(--acc);letter-spacing:3px}.rc p{margin:8px 0;line-height:1.6}.rc small{color:var(--mute)}
+form{background:var(--card);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:12px}
+input[type=text],textarea,select{font:inherit;padding:12px 14px;border-radius:12px;border:1px solid var(--ln);background:var(--bg);color:var(--ink);width:100%}
+textarea{min-height:110px;resize:vertical}
+.st{display:flex;gap:4px;font-size:28px;color:var(--ln);cursor:pointer}.st span.on{color:var(--acc)}
+.btn{background:var(--ink);color:var(--bg);border:0;border-radius:99px;padding:13px 22px;font:700 14px 'Manrope';cursor:pointer;transition:.2s}.btn:hover{background:var(--acc);color:#fff}
+.btn.no{background:transparent;color:var(--ink);border:1px solid var(--ln)}.btn:disabled{opacity:.4;cursor:not-allowed}
+.note{font-size:13px;color:var(--acc);min-height:18px;line-height:1.5}
+.mod{margin-top:36px;border:2px dashed var(--acc);border-radius:20px;padding:22px}
+.mod h3{margin-bottom:14px}.empty{color:var(--mute);font-size:13px}
+
+.ct{background:var(--ink);color:var(--bg);border-radius:32px;margin:0 3vw 40px;text-align:center}
+.ct h2{font-size:clamp(36px,7vw,90px)}.ct a{color:var(--acc);font-weight:700;font-size:clamp(16px,2.4vw,24px);border-bottom:2px solid var(--acc)}
+footer{padding:20px 6vw 30px;color:var(--mute);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.ct .links{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:34px}.ct a.lk{display:inline-flex;align-items:center;gap:10px;border:1.5px solid #ffffff55;border-radius:99px;padding:13px 22px;color:#fff;font-size:15px;font-weight:700;transition:transform .25s,background .25s,border-color .25s}.ct a.lk:hover{background:var(--acc);border-color:var(--acc);transform:translateY(-4px)}.ct a.lk svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hero{position:relative;overflow:hidden;isolation:isolate;color:#fff}.hero>#hc,.hero>#hbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}.hero>.ov{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#050b1acc,#050b1a88 50%,#050b1acc)}.hero>div{position:relative;z-index:1}.hero p{color:#ffffffcc}.hero .stats span{color:#ffffffaa}.hero .cta{background:var(--acc);color:#fff}.hero .cta:hover{background:#fff;color:#0b1b33}
+@media(max-width:820px){nav{display:none}.hero,.avis{grid-template-columns:1fr}.photo{max-width:260px}.row{grid-template-columns:100px 1fr}.row .t{grid-column:1/-1}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<header><div class="logo">Graphisme <i>et</i> montage vidéo</div><nav><a href="#work">Graphisme</a><a href="#film">Vidéo</a><a href="#avis">Avis</a><a href="#contact">Contact</a></nav></header>
+
+<section class="hero"><canvas id="hc" width="960" height="540"></canvas><video id="hbg" class="hide" autoplay muted loop playsinline></video><div class="ov"></div>
+  <div>
+    <h1 id="h1"></h1>
+    <p>Je crée des identités visuelles, des supports imprimés et des motion designs, puis je monte les vidéos qui les mettent en scène.</p>
+    <a class="cta" href="#film">Voir mon showreel ↓</a>
+    <div class="stats"><div><b data-n="20">0</b><span>Projets</span></div><div><b data-n="25">0</b><span>Clients</span></div><div><b data-n="3">0</b><span>Ans d’expérience</span></div></div>
+  </div>
+  <div class="photo">VOTRE PHOTO<br>ICI</div>
+</section>
+
+<div class="mq"><div id="mq"></div></div>
+
+<section id="work">
+  <h2 class="rv">Graphisme</h2><p class="sub rv">Identités, affiches, packaging, éditorial — triés par catégorie.</p>
+  <div class="chips" id="wf"></div><div class="grid" id="wg"></div>
+</section>
+
+<section id="film" style="padding-top:10px">
+  <h2 class="rv">Montage vidéo</h2><p class="sub rv">Mon showreel, puis mes réalisations par catégorie.</p>
+  <div class="vid rv" id="vid">
+    <canvas id="cv" width="960" height="540"></canvas>
+    <div class="ctl"><button class="pbtn" id="pp" aria-label="Lecture / pause">❚❚</button><span id="tc">00:00:00</span></div>
+  </div>
+  <div class="up hide" id="up"><label>⬆ Mettre ma vidéo<input type="file" id="vf" accept="video/*"></label> <span id="un" class="note"></span></div>
+  <div class="chips" id="ff" style="margin-top:36px"></div><div id="fg"></div>
+</section>
+
+<section id="avis">
+  <h2 class="rv">Avis clients</h2><p class="sub rv">Chaque avis est relu et validé par moi avant d’être publié.</p>
+  <div class="avis">
+    <div class="lst" id="rl"><div class="empty">Aucun avis pour le moment.</div></div>
+    <form id="rf">
+      <h3>Laisser un avis</h3>
+      <input type="text" id="rn" placeholder="Votre nom" required maxlength="60">
+      <select id="rp"><option>Graphisme</option><option>Montage vidéo</option><option>Les deux</option></select>
+      <div class="st" id="si"></div>
+      <textarea id="rt" placeholder="Votre commentaire" required maxlength="500"></textarea>
+      <button class="btn" id="sb" type="submit">Envoyer pour validation</button>
+      <div class="note" id="nt"></div>
+    </form>
+  </div>
+  <div class="mod hide" id="mod"><h3>Espace propriétaire — avis en attente</h3><div class="lst" id="pl"><div class="empty">Rien en attente.</div></div></div>
+</section>
+
+<section class="ct" id="contact"><h2>Travaillons<br>ensemble</h2><a href="mailto:votrenom@gmail.com">votrenom@gmail.com</a><div class="links"><a class="lk" href="mailto:votrenom@gmail.com"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Gmail</a><a class="lk" href="https://www.behance.net/votrenom" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M3 7h6a3 3 0 0 1 0 5H3zM3 12h7a3 3 0 0 1 0 5H3z"/><path d="M14 8.5h7M14.5 14.5a3 3 0 0 0 6 0 3 3 0 0 0-6 0"/></svg>Behance</a><a class="lk" href="https://www.instagram.com/votrenom" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/></svg>Instagram</a><a class="lk" href="https://wa.me/21600000000" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8 19.6z"/><path d="M9 9c0 3 3 6 6 6l1-1.5-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/></svg>WhatsApp</a></div></section>
+<footer><span>© 2026 VOTRE NOM</span><span>Gmail · Behance · Instagram · WhatsApp</span></footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const G=["#ff7a1a,#ffc28f","#2b6cff,#9cc0ff","#0b1b33,#3f5b8a","#14b8a6,#9ff0e4","#7c5cff,#c9bcff","#ff4d8d,#ffc0d8"].map(x=>`linear-gradient(150deg,${x})`);
+const W=[["Identité visuelle","Projet 01"],["Affiche","Projet 02"],["Packaging","Projet 03"],["Édition / Print","Projet 04"],["Motion design","Projet 05"],["Web / UI","Projet 06"],["Typographie","Projet 07"],["Pochette d’album","Projet 08"]];
+const F=[["Court métrage","Titre du court métrage","04:12 · 2026"],["Publicité","Spot publicitaire","00:30 · 2025"],["Clip musical","Clip musical","03:04 · 2025"],["Documentaire","Extrait documentaire","08:47 · 2024"],["Motion reel","Motion reel","01:15 · 2024"]];
+
+// titre animé mot par mot
+$("#h1").innerHTML="Graphisme et montage vidéo".split(" ").map((w,i)=>`<span class="w ${w.includes("amp")?"a":""}" style="animation-delay:${.1+i*.12}s">${w}</span>`).join(" ");
+$("#mq").innerHTML="<span>Graphisme</span><span>✦</span><span>Montage vidéo</span><span>✦</span><span>Motion design</span><span>✦</span><span>Identité visuelle</span><span>✦</span>".repeat(8);
+
+// révélation au scroll + compteurs
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+document.querySelectorAll("[data-n]").forEach(b=>{const n=+b.dataset.n;let c=0;const t=setInterval(()=>{c++;b.textContent=c;if(c>=n)clearInterval(t)},1400/n)});
+addEventListener("scroll",()=>{$("#bar").style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+"%"});
+
+function build(list,box,fb,mk){
+  fb.innerHTML=["Tout",...new Set(list.map(x=>x[0]))].map((c,i)=>`<button class="chip ${i?"":"on"}" data-c="${c}">${c}</button>`).join("");
+  box.innerHTML=list.map(mk).join("");
+  box.querySelectorAll(".card,.row").forEach((el,i)=>{el.classList.add("rv");el.style.transitionDelay=(i%4)*.08+"s";io.observe(el)});
+  fb.onclick=e=>{const b=e.target.closest(".chip");if(!b)return;fb.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x===b));
+    box.querySelectorAll("[data-c]").forEach(el=>el.classList.toggle("hide",b.dataset.c!=="Tout"&&el.dataset.c!==b.dataset.c))};
+}
+build(W,$("#wg"),$("#wf"),(w,i)=>`<div class="card" data-c="${w[0]}" style="--g:${G[i%6]}"><em>${w[0]}</em><small>Votre visuel ici</small><h3>${w[1]}</h3></div>`);
+build(F,$("#fg"),$("#ff"),(f,i)=>`<div class="row" data-c="${f[0]}"><div class="th" style="--g:${G[(i+2)%6]}">▶</div><div><h3>${f[1]}</h3><p>${f[0]}</p></div><div class="t">${f[2]}</div></div>`);
+
+/* Showreel : animation canvas par défaut, remplacée par votre vidéo une fois importée */
+const cv=$("#cv"),cx=cv.getContext("2d");let play=true,t0=0,tt=0;const WORDS=["DESIGN","MONTAGE","MOTION","IDENTITÉ","CINÉMA"];
+function frame(ts){if(play){tt+=16}
+  const s=tt/1000,i=Math.floor(s/1.4)%WORDS.length,p=(s%1.4)/1.4;
+  cx.fillStyle=["#ff7a1a","#2b6cff","#0b1b33","#14b8a6","#7c5cff"][i];cx.fillRect(0,0,960,540);
+  cx.fillStyle="#ffffff22";for(let k=0;k<6;k++){cx.beginPath();cx.arc(160*k+((s*60)%160),270+Math.sin(s*2+k)*140,60+k*10,0,7);cx.fill()}
+  cx.fillStyle="#fff";cx.font="800 150px Manrope,sans-serif";cx.textAlign="center";
+  cx.globalAlpha=Math.min(1,p*4);cx.fillText(WORDS[i],480,300+(1-Math.min(1,p*4))*60);cx.globalAlpha=1;
+  const f=Math.floor(s*25);$("#tc").textContent=[Math.floor(s/60),Math.floor(s%60),f%25].map(n=>String(n).padStart(2,"0")).join(":");
+  requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+$("#pp").onclick=()=>{const v=$("#vid video");if(v){v.paused?v.play():v.pause();$("#pp").textContent=v.paused?"▶":"❚❚"}else{play=!play;$("#pp").textContent=play?"❚❚":"▶"}};
+const hc=$("#hc"),hx=hc.getContext("2d");
+function heroLoop(ts){const s=ts/1000;hx.fillStyle="#0b1b33";hx.fillRect(0,0,960,540);
+[["#ff7a1a",0],["#2b6cff",2],["#14b8a6",4],["#7c5cff",6]].forEach(([c,o])=>{const x=480+Math.cos(s*.3+o)*380,y=270+Math.sin(s*.4+o*1.3)*190,g=hx.createRadialGradient(x,y,0,x,y,260);g.addColorStop(0,c+"cc");g.addColorStop(1,c+"00");hx.fillStyle=g;hx.fillRect(0,0,960,540)});
+for(let k=0;k<140;k++){hx.fillStyle=`rgba(255,255,255,${Math.random()*.08})`;hx.fillRect(Math.random()*960,Math.random()*540,2,2)}
+hx.fillStyle="rgba(255,255,255,.05)";hx.fillRect((s*140)%960,0,1.5,540);
+if(!matchMedia("(prefers-reduced-motion:reduce)").matches)requestAnimationFrame(heroLoop)}
+requestAnimationFrame(heroLoop);
+function useVideo(url){const hv=$("#hbg");hv.src=url;hv.classList.remove("hide");hc.classList.add("hide");let v=$("#vid video");if(!v){v=document.createElement("video");v.controls=true;v.playsInline=true;cv.replaceWith(v);$(".ctl").classList.add("hide")}v.src=url}
+
+/* Avis : les clients envoient dans "pending", seul le propriétaire publie dans "approved" */
+let rate=5;const si=$("#si");
+const paint=()=>si.innerHTML=[1,2,3,4,5].map(n=>`<span data-n="${n}" class="${n<=rate?"on":""}">★</span>`).join("");
+si.onclick=e=>{const s=e.target.closest("span");if(s){rate=+s.dataset.n;paint()}};paint();
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const rc=(d,x="")=>`<div class="rc"><div class="s">${"★".repeat(d.rate)}${"☆".repeat(5-d.rate)}</div><p>${esc(d.text)}</p><small>${esc(d.name)} — ${esc(d.project)}</small>${x}</div>`;
+
+(async()=>{
+  let db=null,user=null,uid=null;
+  try{db=await claude.use("db");user=await claude.use("user");if(user)uid=await user.id()}catch(e){}
+  if(!db){$("#nt").textContent="Les avis ne sont pas disponibles ici.";$("#sb").disabled=true;return}
+  db.collection("approved").orderBy("at","desc").onSnapshot(s=>{$("#rl").innerHTML=s.empty?'<div class="empty">Aucun avis pour le moment.</div>':s.docs.map(d=>rc(d.data())).join("")},()=>{});
+  db.doc("site/reel").onSnapshot(s=>{if(s.exists&&s.data().url)useVideo(s.data().url)},()=>{});
+  if(!uid){$("#nt").textContent="Connectez-vous à Claude pour envoyer un avis.";$("#sb").disabled=true}
+  $("#rf").onsubmit=async e=>{e.preventDefault();if(!uid)return;$("#nt").textContent="Envoi…";
+    try{await db.doc("pending/"+uid).set({name:$("#rn").value.trim(),project:$("#rp").value,rate,text:$("#rt").value.trim(),at:Date.now()});
+      $("#rf").reset();rate=5;paint();$("#nt").textContent="Merci ! Votre avis sera publié après validation."}
+    catch(err){$("#nt").textContent="Envoi impossible, réessayez."}};
+  if(user&&user.canEdit()){
+    $("#mod").classList.remove("hide");$("#up").classList.remove("hide");
+    db.collection("pending").orderBy("at","desc").onSnapshot(s=>{$("#pl").innerHTML=s.empty?'<div class="empty">Rien en attente.</div>':s.docs.map(d=>rc(d.data(),`<div style="display:flex;gap:10px;margin-top:8px"><button class="btn" data-a="ok" data-id="${d.id}">Accepter</button><button class="btn no" data-a="no" data-id="${d.id}">Refuser</button></div>`)).join("")},()=>{});
+    $("#pl").onclick=async e=>{const b=e.target.closest("button");if(!b)return;const ref=db.doc("pending/"+b.dataset.id);
+      try{if(b.dataset.a==="ok"){const s=await ref.get();await db.doc("approved/"+b.dataset.id).set(s.data())}await ref.delete()}catch(err){}};
+    $("#vf").onchange=async e=>{const f=e.target.files[0];if(!f)return;$("#un").textContent="Téléversement…";
+      try{const as=await claude.use("assets");const r=await as.upload(f);await db.doc("site/reel").set({id:r.id,url:r.url});$("#un").textContent="Vidéo en ligne ✓"}
+      catch(err){$("#un").textContent="Échec du téléversement."}};
+  }
+})();
+</script>
+</body>
+</html>
